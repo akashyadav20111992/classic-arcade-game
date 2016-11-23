@@ -69,16 +69,16 @@ Player.prototype.gamewon = function(){
 
 // this function handles the input provided by the user
 Player.prototype.handleInput = function(keyPressed){
-  if(keyPressed === 'left' && player.x > 0){
+  if(keyPressed === 'left' && this.x > 0){
     this.x = this.x - 100;
   }
-  if(keyPressed === 'right' && player.x < 399){
+  if(keyPressed === 'right' && this.x < 399){
     this.x = this.x + 100;
   }
-  if(keyPressed === 'up' && player.y > -15){
+  if(keyPressed === 'up' && this.y > -15){
     this.y = this.y - 85;
   }
-  if(keyPressed === 'down' && player.y < 410){
+  if(keyPressed === 'down' && this.y < 410){
     this.y = this.y + 85;
   }
 };
