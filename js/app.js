@@ -8,7 +8,6 @@ var Enemy = function(x, y, speed) {
   // The image/sprite for our enemies, this uses
   // a helper to easily load images
   this.sprite = 'images/enemy-bug.png';
-
 };
 
 // Update the enemy's position, required method for game
@@ -21,7 +20,7 @@ Enemy.prototype.update = function(dt) {
   if(this.x > 505){
     this.x = 0;
   }
-  gamelose(this);
+  this.gamelose(this);
 };
 
 // Draw the enemy on the screen, required method for game
@@ -36,35 +35,19 @@ var Player = function(x, y){
   this.x = x;
   this.y = y;
   this.sprite = 'images/char-boy.png';
-}
+};
 
 Player.prototype.update = function(dt){
-  gamewon(this);
-}
+  this.gamewon();
+};
 
 Player.prototype.render = function(){
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-
-// this function handles the input provided by the user
-Player.prototype.handleInput = function(keyPressed){
-  if(keyPressed === 'left' && player.x > 0){
-    player.x = player.x - 100;
-  }
-  if(keyPressed === 'right' && player.x < 399){
-    player.x = player.x + 100;
-  }
-  if(keyPressed === 'up' && player.y > -15){
-    player.y = player.y - 85;
-  }
-  if(keyPressed === 'down' && player.y < 410){
-    player.y = player.y + 85;
-  }
-}
+};
 
 // this function identifies the collision between
 //enemy and player
-var gamelose = function(bug){
+Enemy.prototype.gamelose = function(bug){
   if(player.y + 130 >= bug.y + 90
     && player.x + 25 <= bug.x + 90
     && player.y + 75 <= bug.y + 135
@@ -73,16 +56,33 @@ var gamelose = function(bug){
       player.y = 415;
       console.log("You Lose");
   }
-}
+};
 
 // this function identifies the win of player
-var gamewon = function(player){
-  if(player.y <= -15){
-    player.x = 200;
-    player.y = 415;
+Player.prototype.gamewon = function(){
+  if(this.y <= -15){
+    this.x = 200;
+    this.y = 415;
     console.log("You Win");
   }
-}
+};
+
+// this function handles the input provided by the user
+Player.prototype.handleInput = function(keyPressed){
+  if(keyPressed === 'left' && player.x > 0){
+    this.x = this.x - 100;
+  }
+  if(keyPressed === 'right' && player.x < 399){
+    this.x = this.x + 100;
+  }
+  if(keyPressed === 'up' && player.y > -15){
+    this.y = this.y - 85;
+  }
+  if(keyPressed === 'down' && player.y < 410){
+    this.y = this.y + 85;
+  }
+};
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -92,7 +92,6 @@ for(var i=0;i<3;i++){
   var enemy = new Enemy(0, ((Math.floor(Math.random() * (2 - 0+1)) + 0) * 85) + 60, Math.random() * 300);
   allEnemies.push(enemy);
 }
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
